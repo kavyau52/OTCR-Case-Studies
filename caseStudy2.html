@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OTCR Consulting | Sustainability Benchmarking</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --navy:       #0D1F35;
+    --teal-dark:  #0D5C6B;
+    --teal:       #0B8FA0;
+    --teal-bright:#00B4C8;
+    --teal-light: #E0F5F7;
+    --teal-mid:   #7FD8E0;
+    --text:       #1A1A1A;
+    --muted:      #5A6A7A;
+    --rule:       #D8DCE0;
+    --bg:         #FFFFFF;
+    --bg-alt:     #F4F8F9;
+  }
+  html { font-size: 16px; }
+  body { font-family: Arial, Helvetica, sans-serif; color: var(--text); background: var(--bg); -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+  /* COVER */
+  .cover { background: var(--navy); padding: 60px 0 56px; }
+  .cover-inner { max-width: 860px; margin: 0 auto; padding: 0 56px; display: grid; grid-template-columns: 1fr auto; gap: 40px; align-items: start; }
+  .eyebrow { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--teal-mid); margin-bottom: 18px; font-weight: 700; }
+  .cover h1 { font-size: 36px; font-weight: 700; color: #FFFFFF; line-height: 1.12; max-width: 580px; margin-bottom: 16px; }
+  .cover-sub { font-size: 15px; color: #8BAFC2; line-height: 1.65; max-width: 520px; margin-bottom: 36px; font-weight: 400; }
+  .cover-tags { display: flex; gap: 28px; flex-wrap: wrap; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 24px; }
+  .cover-tag { font-size: 11px; color: #5A7A8E; text-transform: uppercase; letter-spacing: 0.1em; }
+  .cover-tag span { color: #8BAFC2; font-weight: 600; }
+  .cover-logo { flex-shrink: 0; width: 130px; margin-top: 4px; }
+  .cover-logo img { width: 130px; display: block; }
+
+  /* METRIC BAND */
+  .metric-band { background: var(--teal-dark); }
+  .metric-band-inner { max-width: 860px; margin: 0 auto; padding: 0 56px; display: grid; grid-template-columns: repeat(4, 1fr); }
+  .metric-item { padding: 24px 0 24px 24px; border-right: 1px solid rgba(255,255,255,0.12); }
+  .metric-item:first-child { padding-left: 0; }
+  .metric-item:last-child { border-right: none; }
+  .metric-num { font-size: 32px; font-weight: 700; color: #FFFFFF; line-height: 1; margin-bottom: 4px; }
+  .metric-lbl { font-size: 10px; color: var(--teal-mid); text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600; }
+
+  /* BODY */
+  .body-wrap { max-width: 860px; margin: 0 auto; padding: 0 56px; }
+  .section { padding: 60px 0 0; }
+  .section-last { padding-bottom: 80px; }
+  .section-num { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--teal); font-weight: 700; margin-bottom: 6px; }
+  h2 { font-size: 23px; font-weight: 700; color: var(--navy); margin-bottom: 12px; line-height: 1.2; }
+  .accent-rule { width: 36px; height: 2px; background: var(--teal-bright); margin-bottom: 22px; }
+  p { font-size: 14.5px; color: #2A3540; line-height: 1.78; margin-bottom: 14px; max-width: 680px; }
+  p:last-child { margin-bottom: 0; }
+  hr.divider { border: none; border-top: 1px solid var(--rule); margin: 60px 0 0; }
+
+  /* PULL QUOTE */
+  .pull-quote { border-left: 3px solid var(--teal-bright); padding: 8px 0 8px 22px; margin: 28px 0; }
+  .pull-quote p { font-size: 15.5px; font-style: italic; color: var(--navy); line-height: 1.65; font-weight: 400; max-width: 600px; }
+
+  /* TWO COL */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 36px; margin-top: 24px; }
+  .col-label { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 700; color: var(--muted); margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid var(--rule); }
+  ul.plain { list-style: none; }
+  ul.plain li { font-size: 13.5px; line-height: 1.65; color: #2A3540; padding: 5px 0 5px 14px; position: relative; }
+  ul.plain li::before { content: ''; position: absolute; left: 0; top: 12px; width: 5px; height: 5px; border-radius: 50%; background: var(--teal); }
+  ol.steps { list-style: none; counter-reset: n; }
+  ol.steps li { counter-increment: n; font-size: 13.5px; line-height: 1.65; color: #2A3540; padding: 5px 0 5px 26px; position: relative; }
+  ol.steps li::before { content: counter(n); position: absolute; left: 0; top: 6px; font-size: 9px; font-weight: 700; color: var(--teal-dark); background: var(--teal-light); width: 17px; height: 17px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+
+  /* SCORECARD TABLE */
+  .table-outer { margin-top: 24px; overflow-x: auto; border: 1px solid var(--rule); }
+  table.score { width: 100%; border-collapse: collapse; font-size: 12.5px; min-width: 560px; }
+  table.score thead { background: var(--navy); }
+  table.score thead th { padding: 9px 14px; text-align: left; color: #FFFFFF; font-weight: 600; font-size: 10.5px; letter-spacing: 0.05em; text-transform: uppercase; white-space: nowrap; }
+  table.score tbody tr { border-bottom: 1px solid var(--rule); }
+  table.score tbody tr:nth-child(even) { background: var(--bg-alt); }
+  table.score td { padding: 9px 14px; color: #2A3540; vertical-align: middle; line-height: 1.5; }
+  table.score td:first-child { font-weight: 600; color: var(--navy); white-space: nowrap; }
+  .status { display: inline-block; padding: 2px 8px; border-radius: 2px; font-size: 10.5px; font-weight: 700; }
+  .status-above { background: #D6F0E8; color: #0A5E3F; }
+  .status-below { background: #FDECEA; color: #8B1A1A; }
+  .status-partial { background: #FEF3D8; color: #7A4800; }
+  .table-note { font-size: 12px; color: var(--muted); font-style: italic; margin-top: 10px; }
+
+  /* BIG NUMBER PAIR */
+  .stat-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; margin-top: 28px; background: var(--rule); border: 1px solid var(--rule); }
+  .stat-box { background: var(--bg); padding: 30px 28px; }
+  .stat-eyebrow { font-size: 9.5px; letter-spacing: 0.16em; text-transform: uppercase; font-weight: 700; color: var(--muted); margin-bottom: 10px; }
+  .stat-big { font-size: 56px; font-weight: 700; line-height: 1; margin-bottom: 8px; }
+  .stat-big.navy { color: var(--navy); }
+  .stat-big.teal { color: var(--teal); }
+  .stat-desc { font-size: 13px; color: #2A3540; line-height: 1.65; margin-bottom: 12px; }
+  .stat-note { font-size: 12px; color: var(--muted); border-top: 1px solid var(--rule); padding-top: 10px; line-height: 1.55; }
+
+  /* BAR CHARTS */
+  .chart-block { margin-top: 28px; border: 1px solid var(--rule); }
+  .chart-header { background: var(--navy); color: #7FBFCA; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 700; padding: 10px 18px; }
+  .chart-body { padding: 22px 20px; }
+  .bar-row { display: grid; grid-template-columns: 160px 1fr 60px; align-items: center; gap: 12px; margin-bottom: 10px; }
+  .bar-row:last-child { margin-bottom: 0; }
+  .bar-lbl { font-size: 12.5px; color: #2A3540; line-height: 1.3; }
+  .bar-track { background: #E4EDEF; height: 16px; border-radius: 1px; overflow: hidden; }
+  .bar-fill { height: 100%; border-radius: 1px; }
+  .bar-val { font-size: 11.5px; font-weight: 700; text-align: right; }
+  .chart-note { font-size: 12px; color: var(--muted); font-style: italic; margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--rule); }
+
+  /* MATRIX */
+  .matrix-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; margin-top: 28px; background: var(--rule); border: 1px solid var(--rule); }
+  .matrix-quad { background: var(--bg); padding: 22px 20px; }
+  .quad-label { font-size: 9.5px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 700; color: var(--teal); margin-bottom: 8px; }
+  .quad-title { font-size: 14px; font-weight: 700; color: var(--navy); margin-bottom: 10px; }
+  .matrix-grid .matrix-quad p { font-size: 12.5px; color: #2A3540; line-height: 1.65; max-width: none; margin-bottom: 0; }
+  .matrix-grid .matrix-quad ul { list-style: none; margin-top: 6px; }
+  .matrix-grid .matrix-quad ul li { font-size: 12.5px; color: #2A3540; padding: 3px 0 3px 12px; position: relative; line-height: 1.55; }
+  .matrix-grid .matrix-quad ul li::before { content: ''; position: absolute; left: 0; top: 10px; width: 4px; height: 4px; border-radius: 50%; background: var(--teal); }
+
+  /* THREE COL */
+  .three-col { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; background: var(--rule); margin-top: 28px; border: 1px solid var(--rule); }
+  .col-block { background: var(--bg); padding: 24px 20px; }
+  .col-block-label { font-size: 9.5px; letter-spacing: 0.16em; text-transform: uppercase; font-weight: 700; color: var(--teal); margin-bottom: 8px; }
+  .col-block-title { font-size: 14px; font-weight: 700; color: var(--navy); margin-bottom: 10px; line-height: 1.25; }
+  .col-block p { font-size: 12.5px; color: #2A3540; line-height: 1.65; max-width: none; margin-bottom: 8px; }
+  .col-block-note { font-size: 11.5px; color: var(--muted); font-style: italic; border-top: 1px solid var(--rule); padding-top: 8px; margin-top: 4px; }
+
+  /* RECOMMENDATIONS */
+  .recs { margin-top: 28px; }
+  .rec { padding: 28px 0; border-bottom: 1px solid var(--rule); }
+  .rec:first-child { border-top: 1px solid var(--rule); }
+  .rec-header { display: flex; align-items: baseline; gap: 16px; margin-bottom: 10px; }
+  .rec-num { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 700; color: var(--teal); white-space: nowrap; flex-shrink: 0; }
+  .rec-title { font-size: 16px; font-weight: 700; color: var(--navy); line-height: 1.3; }
+  .rec-body p { font-size: 13.5px; color: #2A3540; line-height: 1.75; max-width: 660px; margin-bottom: 0; }
+  .rec-action { margin-top: 10px; font-size: 13px; color: var(--teal-dark); font-weight: 700; }
+
+  /* FOOTER */
+  .footer { background: var(--navy); padding: 40px 0; margin-top: 72px; }
+  .footer-inner { max-width: 860px; margin: 0 auto; padding: 0 56px; display: grid; grid-template-columns: 1fr auto; gap: 40px; align-items: center; }
+  .footer-title { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--teal-mid); margin-bottom: 8px; }
+  .footer-body { font-size: 12.5px; color: #6A8898; line-height: 1.65; max-width: 480px; }
+  .footer-logo img { width: 110px; display: block; opacity: 0.85; }
+
+  @media print {
+    body { font-size: 13px; }
+    .cover { padding: 40px 0 36px; }
+    .cover h1 { font-size: 28px; }
+    .section { padding: 40px 0 0; }
+    .stat-pair, .matrix-grid, .three-col, .rec { break-inside: avoid; }
+    @page { margin: 1.2cm 1.5cm; }
+  }
+  @media (max-width: 680px) {
+    .cover-inner { grid-template-columns: 1fr; }
+    .cover-logo { display: none; }
+    .metric-band-inner { grid-template-columns: repeat(2, 1fr); }
+    .two-col, .stat-pair, .matrix-grid, .three-col { grid-template-columns: 1fr; }
+    .bar-row { grid-template-columns: 110px 1fr 50px; }
+    .body-wrap, .cover-inner, .footer-inner { padding: 0 20px; }
+    .footer-inner { grid-template-columns: 1fr; }
+    .rec-header { flex-direction: column; gap: 4px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- COVER -->
+<div class="cover">
+  <div class="cover-inner">
+    <div class="cover-text">
+      <div class="eyebrow">OTCR Consulting &nbsp;|&nbsp; Client Case Study</div>
+      <h1>Sustainability Benchmarking for a Major League Baseball Team</h1>
+      <p class="cover-sub">A full-cycle benchmarking engagement covering energy, water, and waste metrics, delivering gap analysis, industry comparisons, and an actionable implementation roadmap.</p>
+      <div class="cover-tags">
+        <div class="cover-tag">Sector <span>Sports &amp; Entertainment</span></div>
+        <div class="cover-tag">Delivered <span>December 2023</span></div>
+        <div class="cover-tag">Practice <span>Sustainability Strategy</span></div>
+      </div>
+    </div>
+    <div class="cover-logo">
+      <img src="otcr_logo.png" alt="OTCR Consulting">
+    </div>
+  </div>
+</div>
+
+<!-- METRIC BAND -->
+<div class="metric-band">
+  <div class="metric-band-inner">
+    <div class="metric-item">
+      <div class="metric-num">4</div>
+      <div class="metric-lbl">Sustainability domains analyzed</div>
+    </div>
+    <div class="metric-item">
+      <div class="metric-num">6</div>
+      <div class="metric-lbl">Industry benchmarks applied</div>
+    </div>
+    <div class="metric-item">
+      <div class="metric-num">9</div>
+      <div class="metric-lbl">Recommendations delivered</div>
+    </div>
+    <div class="metric-item">
+      <div class="metric-num">7%</div>
+      <div class="metric-lbl">Current waste diversion rate</div>
+    </div>
+  </div>
+</div>
+
+<!-- BODY -->
+<div class="body-wrap">
+
+  <!-- 01 CONTEXT -->
+  <div class="section">
+    <div class="section-num">01 &nbsp;/&nbsp; Context</div>
+    <h2>The client needed a rigorous baseline before any improvement roadmap could be built</h2>
+    <div class="accent-rule"></div>
+    <p>Professional sports venues have become an increasingly visible front in corporate sustainability. Sponsors, certification bodies, and fans are applying pressure, and the gap between stated commitments and measurable performance carries real reputational and financial consequences for a franchise.</p>
+    <p>The client, a Major League Baseball team operating one of the country's most historic stadiums, had sustainability initiatives in place but lacked a structured view of how those initiatives measured up against peer organizations. Data was siloed across multiple platforms. Reporting units were inconsistent across categories. Several key domains had no baseline data at all. The engagement mandate was clear: conduct a rigorous benchmarking analysis, surface material gaps, and deliver an actionable framework for ongoing performance management.</p>
+    <div class="pull-quote">
+      <p>"The client came to us to benchmark their metrics utilized to identify the impact of their sustainability initiatives and provide recommendations."</p>
+    </div>
+    <div class="two-col">
+      <div>
+        <div class="col-label">Scope of engagement</div>
+        <ul class="plain">
+          <li>Energy consumption and GHG emissions</li>
+          <li>Water conservation across fixture, irrigation, and cooling tower</li>
+          <li>Waste diversion and landfill management</li>
+          <li>Identification of certification pathways (LEED, TRUE, ISO 20121)</li>
+        </ul>
+      </div>
+      <div>
+        <div class="col-label">OTCR methodology</div>
+        <ol class="steps">
+          <li>Benchmarked sustainability practices across sports and related industries</li>
+          <li>Conducted data gap analysis across all four initiative areas</li>
+          <li>Collected and standardized existing metrics from Dynegy and GOAL platforms</li>
+          <li>Evaluated feasibility and impact of each recommendation</li>
+          <li>Built implementation roadmaps with short and long-term timelines</li>
+          <li>Developed guides for ongoing monitoring and reporting</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- 02 SCORECARD -->
+  <div class="section">
+    <div class="section-num">02 &nbsp;/&nbsp; Scorecard</div>
+    <h2>Two domains above industry standard, two with material performance gaps</h2>
+    <div class="accent-rule"></div>
+    <p>OTCR assessed the client's performance across four sustainability domains using a standardized scoring framework. Energy and carbon tracking demonstrated institutional discipline and above-average data maturity. Water and waste management revealed a different picture: significant data collection gaps, non-standard reporting units, and performance metrics well below the thresholds required for leading certification bodies.</p>
+
+    <div class="table-outer">
+      <table class="score">
+        <thead>
+          <tr>
+            <th>Domain</th>
+            <th>vs. Industry</th>
+            <th>Key Gap</th>
+            <th>Priority Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Energy Consumption</td>
+            <td><span class="status status-above">Above standard</span></td>
+            <td>No breakdown by meter or source; 23 kWh/sqft vs. 16 kWh/sqft industry average</td>
+            <td>Categorize meters; establish 10-15 year consumption goals</td>
+          </tr>
+          <tr>
+            <td>GHG Emissions</td>
+            <td><span class="status status-above">Above standard</span></td>
+            <td>Emissions not broken down by source; discrepancy between Dynegy and GOAL</td>
+            <td>Reconcile platforms; break out Scope 1, 2, 3 emissions by source</td>
+          </tr>
+          <tr>
+            <td>Water Consumption</td>
+            <td><span class="status status-below">Below standard</span></td>
+            <td>No cooling tower data; no labeling by fixture, irrigation, or cooling source</td>
+            <td>Label sources; install submeters; integrate cooling tower tracking</td>
+          </tr>
+          <tr>
+            <td>Waste Management</td>
+            <td><span class="status status-below">Below standard</span></td>
+            <td>7% diversion rate vs. 90% required for LEED Platinum; annual data only</td>
+            <td>Food waste digester; compostable serviceware; RFID tracking</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="table-note">OTCR evaluated the team against direct sports industry peers (Philadelphia Eagles, Atlanta Falcons, SF Giants) and indirect benchmarks (Hilton, Coca-Cola, AT&amp;T).</p>
+  </div>
+
+  <hr class="divider">
+
+  <!-- 03 ENERGY -->
+  <div class="section">
+    <div class="section-num">03 &nbsp;/&nbsp; Energy &amp; Carbon</div>
+    <h2>Data infrastructure exists, but granularity is insufficient to drive decisions</h2>
+    <div class="accent-rule"></div>
+    <p>The client scores above industry standards on historical data availability and unit consistency. However, the data is too aggregated to support targeted intervention. Energy meters on Dynegy carry numerical identifiers that have not been mapped to physical locations or system types. Carbon emissions are reported as totals without source-level breakdowns. The two platforms in use, Dynegy and GOAL, produce conflicting figures for the same reporting periods.</p>
+    <p>On a performance basis, the gap is significant. At 23.7 kWh per square foot, the client is consuming roughly 48% more electricity than the related industry average of 16 kWh. Carbon emissions per square foot are 4.3 kg above peer benchmarks. These are not marginal variances.</p>
+
+    <div class="stat-pair">
+      <div class="stat-box">
+        <div class="stat-eyebrow">Electricity consumption</div>
+        <div class="stat-big navy">23.7</div>
+        <div style="font-size:13px;color:var(--muted);margin-bottom:12px;font-weight:600;">kWh per sq ft (actual)</div>
+        <div class="stat-desc">The related industry average is <strong>16 kWh per square foot</strong>. The gap reflects the frequency and density of events at a major league venue, but also points to concrete opportunities: energy-efficient lighting, better meter categorization, and long-term consumption targets.</div>
+        <div class="stat-note">Dynegy reports 33 kWh/sqft; GOAL reports 23 kWh/sqft. Platform reconciliation is a prerequisite for any credible performance improvement initiative.</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-eyebrow">Carbon emissions</div>
+        <div class="stat-big teal">4.3 kg</div>
+        <div style="font-size:13px;color:var(--muted);margin-bottom:12px;font-weight:600;">above industry average per sq ft</div>
+        <div class="stat-desc">Industry average sits at 10.1 kg CO2 per square foot. The team reports 14.4 kg on GOAL and 13.7 kg on Dynegy. <strong>Neither platform breaks emissions down by source</strong>, which makes it impossible to identify where reductions would have the most impact.</div>
+        <div class="stat-note">Short-term fix: break out emissions by source in both platforms. Long-term: forecast through 2035 using exponential smoothing, then transition to an AI model.</div>
+      </div>
+    </div>
+
+    <div class="chart-block" style="margin-top:28px;">
+      <div class="chart-header">Energy consumption per square foot &nbsp;|&nbsp; Team vs. industry average, 2020-2023</div>
+      <div class="chart-body">
+        <div class="bar-row">
+          <div class="bar-lbl">2020 &nbsp;<span style="font-size:11px;color:var(--muted);">(team)</span></div>
+          <div class="bar-track"><div class="bar-fill" style="width:56%;background:#0D1F35"></div></div>
+          <div class="bar-val" style="color:#0D1F35">27 kWh</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-lbl">2021 &nbsp;<span style="font-size:11px;color:var(--muted);">(team)</span></div>
+          <div class="bar-track"><div class="bar-fill" style="width:68%;background:#0D1F35"></div></div>
+          <div class="bar-val" style="color:#0D1F35">34.7 kWh</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-lbl">2022 &nbsp;<span style="font-size:11px;color:var(--muted);">(team)</span></div>
+          <div class="bar-track"><div class="bar-fill" style="width:74%;background:#0D1F35"></div></div>
+          <div class="bar-val" style="color:#0D1F35">37.6 kWh</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-lbl">2023 &nbsp;<span style="font-size:11px;color:var(--muted);">(team)</span></div>
+          <div class="bar-track"><div class="bar-fill" style="width:65%;background:#0D1F35"></div></div>
+          <div class="bar-val" style="color:#0D1F35">33.6 kWh</div>
+        </div>
+        <div class="bar-row" style="margin-top:10px;">
+          <div class="bar-lbl" style="font-weight:700;color:var(--teal-dark);">Industry average</div>
+          <div class="bar-track"><div class="bar-fill" style="width:31%;background:#00B4C8"></div></div>
+          <div class="bar-val" style="color:#00B4C8">16 kWh</div>
+        </div>
+        <div class="chart-note">Data from Dynegy platform. Industry average represents related large-venue and hospitality benchmarks.</div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- 04 WATER -->
+  <div class="section">
+    <div class="section-num">04 &nbsp;/&nbsp; Water</div>
+    <h2>A reported 13% reduction, but insufficient data fidelity to validate the result</h2>
+    <div class="accent-rule"></div>
+    <p>Water management is where data collection deficiencies are most acute. The client reported a 13% reduction in total water usage between 2021 and 2022. Under normal circumstances that would represent a meaningful efficiency gain. The issue is that the underlying data lacks the categorization and coverage to distinguish genuine conservation from incomplete capture.</p>
+    <p>Industry best practice requires tracking plumbing fixture, irrigation, and cooling tower as separate line items. The client currently aggregates all water consumption without source labeling. Cooling tower data, a required input for most major certification frameworks, does not exist. As OTCR noted in the analysis: "it's difficult to conclude their current performance on water consumption with limited data."</p>
+
+    <div class="three-col">
+      <div class="col-block">
+        <div class="col-block-label">Plumbing &amp; fixture</div>
+        <div class="col-block-title">Estimated 13.5% reduction, 2021-2022</div>
+        <p>Industry standard tracks fixture water as a discrete category, targeting <strong>30% reduction from the established baseline</strong>. The client's reported figure is an estimate and may not be representative of actual consumption. Submeter installation would convert this into a defensible, auditable data point.</p>
+        <div class="col-block-note">Near-term path: float method to gather preliminary flow data, followed by dedicated submeter installation within a 1-2 year horizon</div>
+      </div>
+      <div class="col-block">
+        <div class="col-block-label">Irrigation</div>
+        <div class="col-block-title">No data currently available</div>
+        <p>Irrigation typically represents the <strong>largest single source of water consumption</strong> at a venue. Industry standard tracks it as a discrete category, targeting 50-70% reduction from regional baseline. The client has no data on record for this category.</p>
+        <div class="col-block-note">Target: halve landscaping and irrigation consumption; deploy flow meters and moisture sensors within a 2-3 month implementation window</div>
+      </div>
+      <div class="col-block">
+        <div class="col-block-label">Cooling tower</div>
+        <div class="col-block-title">No data. No viable certification path without it.</div>
+        <p>Cooling tower management is a mandatory reporting input for most major sustainability certification frameworks. Bleed-off rate is tracked in gallons per minute per BTU. <strong>Integrating cooling tower management into the sustainability program's scope</strong> is the foundational step before any certification pursuit.</p>
+        <div class="col-block-note">Industry protocol: monthly reporting on consumption and bleed-off rate; annual water quality report at minimum</div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- 05 WASTE -->
+  <div class="section">
+    <div class="section-num">05 &nbsp;/&nbsp; Waste</div>
+    <h2>93% of waste goes to landfill. Closing that gap is the central value creation opportunity.</h2>
+    <div class="accent-rule"></div>
+    <p>Waste management represents the most significant performance gap in the engagement. The client currently diverts 7% of total waste from landfills. LEED Platinum and TRUE certification both require 90%. Every direct and indirect benchmark organization OTCR analyzed was performing at or above that standard.</p>
+
+    <div class="stat-pair">
+      <div class="stat-box">
+        <div class="stat-eyebrow">Current waste diversion rate</div>
+        <div class="stat-big navy">7%</div>
+        <div class="stat-desc">In 2022, the client recycled 132.35 tons from a total of 2,040.06 tons generated. The Philadelphia Eagles divert <strong>99% of waste from landfill</strong>. The Atlanta Falcons and SF Giants both exceed 90%. Hilton, Coca-Cola, and AT&amp;T all operate above the 90% threshold as well.</div>
+        <div class="stat-note">Compounding the gap: the client tracks only annual totals, lacks monthly data points, and reports in short tons rather than the metric tons required for most certification submissions.</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-eyebrow">Industry standard for LEED certification</div>
+        <div class="stat-big teal">90%</div>
+        <div class="stat-desc">TRUE and LEED certification bodies both define <strong>90% as the minimum diversion threshold</strong> for recognition. Seven other MLB franchises currently hold stadium-level LEED certification. The gap between 7% and 90% is material but addressable through targeted capital deployment.</div>
+        <div class="stat-note">The Eagles' onsite biodigester was cited as the primary driver of their LEED Gold Certification, diverting approximately 4,000 tons of waste from landfills annually.</div>
+      </div>
+    </div>
+
+    <div class="chart-block">
+      <div class="chart-header">Waste diversion rate &nbsp;|&nbsp; Team vs. direct and indirect competitors, 2022</div>
+      <div class="chart-body">
+        <div class="bar-row">
+          <div class="bar-lbl" style="font-weight:700;color:#8B1A1A;">Client</div>
+          <div class="bar-track"><div class="bar-fill" style="width:7%;background:#CC4444"></div></div>
+          <div class="bar-val" style="color:#CC4444">7%</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-lbl">Hilton</div>
+          <div class="bar-track"><div class="bar-fill" style="width:18%;background:#B0BEC5"></div></div>
+          <div class="bar-val" style="color:#90A4AE">18%</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-lbl">Atlanta Falcons</div>
+          <div class="bar-track"><div class="bar-fill" style="width:91%;background:#0D5C6B"></div></div>
+          <div class="bar-val" style="color:#0D5C6B">91%</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-lbl">Coca-Cola</div>
+          <div class="bar-track"><div class="bar-fill" style="width:90%;background:#0D5C6B"></div></div>
+          <div class="bar-val" style="color:#0D5C6B">90%</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-lbl">AT&amp;T</div>
+          <div class="bar-track"><div class="bar-fill" style="width:95%;background:#0B8FA0"></div></div>
+          <div class="bar-val" style="color:#0B8FA0">95%</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-lbl">Philadelphia Eagles</div>
+          <div class="bar-track"><div class="bar-fill" style="width:99%;background:#0B8FA0"></div></div>
+          <div class="bar-val" style="color:#0B8FA0">99%</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-lbl">SF Giants</div>
+          <div class="bar-track"><div class="bar-fill" style="width:99%;background:#0B8FA0"></div></div>
+          <div class="bar-val" style="color:#0B8FA0">99%</div>
+        </div>
+        <div style="margin-top:12px;padding-top:10px;border-top:1px solid var(--rule);display:flex;align-items:center;gap:8px;">
+          <div style="width:24px;height:2px;background:#CC4444;"></div><span style="font-size:11.5px;color:var(--muted);">Team current</span>
+          <div style="width:24px;height:2px;background:#00B4C8;margin-left:12px;"></div><span style="font-size:11.5px;color:var(--muted);">90% certification threshold</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- 06 FEASIBILITY MATRIX -->
+  <div class="section">
+    <div class="section-num">06 &nbsp;/&nbsp; Prioritization</div>
+    <h2>OTCR evaluated each initiative against impact potential and implementation feasibility</h2>
+    <div class="accent-rule"></div>
+    <p>Each recommendation was scored across two dimensions: magnitude of impact on sustainability performance outcomes, and implementation feasibility given capital requirements, timeline, and organizational bandwidth. Four initiatives landed in the high-impact, high-feasibility quadrant and represent the strongest near-term ROI on program investment.</p>
+
+    <div class="matrix-grid">
+      <div class="matrix-quad" style="border-bottom:2px solid var(--rule);">
+        <div class="quad-label">High impact &nbsp;/&nbsp; High feasibility</div>
+        <div class="quad-title">Start here</div>
+        <ul>
+          <li><strong>Identify and categorize energy meters</strong> on Dynegy by location and system type</li>
+          <li><strong>Comprehensive emissions tracking</strong> with breakdown by source in both platforms</li>
+          <li><strong>Emission subcategorization</strong> to meet reporting standards</li>
+          <li><strong>Cooling tower inclusion</strong> in sustainability scope</li>
+        </ul>
+      </div>
+      <div class="matrix-quad" style="border-bottom:2px solid var(--rule);border-left:2px solid var(--rule);">
+        <div class="quad-label">High impact &nbsp;/&nbsp; Lower feasibility</div>
+        <div class="quad-title">Plan and invest</div>
+        <ul>
+          <li><strong>RFID waste tracking</strong> integrated into truck loading infrastructure</li>
+          <li><strong>Submeter installation</strong> for irrigation and plumbing</li>
+          <li>Food waste digester, with Power Knot LFC-2000 as a modeled option ($100K-$1M)</li>
+        </ul>
+      </div>
+      <div class="matrix-quad">
+        <div class="quad-label">Lower impact &nbsp;/&nbsp; High feasibility</div>
+        <div class="quad-title">Quick wins</div>
+        <ul>
+          <li><strong>Compostable serviceware</strong> across concessions (NatureWorks model)</li>
+          <li>Data forecasting through 2035 using Excel exponential smoothing</li>
+          <li>Recertification for environmental awards (most recent certifications are from 10 years ago)</li>
+        </ul>
+      </div>
+      <div class="matrix-quad" style="border-left:2px solid var(--rule);">
+        <div class="quad-label">Lower impact &nbsp;/&nbsp; Lower feasibility</div>
+        <div class="quad-title">Longer horizon</div>
+        <ul>
+          <li>Transition to AI-based sustainability forecasting model post-2030</li>
+          <li>Full LEED Platinum recertification process</li>
+          <li>Renewable energy certificate procurement from ENGIE or Shell Energy</li>
+        </ul>
+      </div>
+    </div>
+    <p class="table-note" style="margin-top:14px;">"Implementing recommendations like precise meter identification and thorough tracking can substantially enhance sustainability initiatives at a minimal financial and time investment."</p>
+  </div>
+
+  <hr class="divider">
+
+  <!-- 07 RECOMMENDATIONS -->
+  <div class="section section-last">
+    <div class="section-num">07 &nbsp;/&nbsp; Recommendations</div>
+    <h2>Three strategic priorities to drive near-term performance gains</h2>
+    <div class="accent-rule"></div>
+    <p>Based on the gap analysis, peer benchmarking, and feasibility matrix, OTCR distilled the engagement into three prioritized recommendations. Each is grounded in specific data from the analysis, has a defined outcome, and can be initiated without large upfront capital commitments.</p>
+
+    <div class="recs">
+      <div class="rec">
+        <div class="rec-header">
+          <div class="rec-num">Recommendation 01</div>
+          <div class="rec-title">Establish data integrity as the foundation for all performance improvement</div>
+        </div>
+        <div class="rec-body">
+          <p>The client cannot credibly measure sustainability performance, let alone improve it, until the underlying data infrastructure is standardized. <strong>Reconcile the platform discrepancy between Dynegy and GOAL</strong>, map every energy meter to a physical location and system type, and convert waste reporting units from short tons to metric tons. These are low-cost, high-leverage interventions that unlock every downstream analysis and certification submission.</p>
+          <div class="rec-action">Initiate with energy meters: transfer numerical identifiers to Excel, assign descriptive labels, and categorize by system pattern. Target completion within 1-2 months with no capital outlay.</div>
+        </div>
+      </div>
+
+      <div class="rec">
+        <div class="rec-header">
+          <div class="rec-num">Recommendation 02</div>
+          <div class="rec-title">Deploy waste diversion infrastructure to close the gap to certification thresholds</div>
+        </div>
+        <div class="rec-body">
+          <p>Moving from 7% to 90% diversion requires operational change at the concessions level. The Philadelphia Eagles' experience provides a direct proof of concept: <strong>aerobic digestion diverted approximately 4,000 tons of waste per year</strong> and was the primary driver of their LEED Gold Certification. Installing a food waste digester for pre- and post-game periods, combined with compostable packaging sourced from a supplier like NatureWorks, represents the highest-ROI path to closing the performance gap.</p>
+          <div class="rec-action">Issue an RFP to Power Knot for an LFC-2000 quote. In parallel, pilot compostable serviceware in one concessions section to generate contamination and fan compliance data before full rollout.</div>
+        </div>
+      </div>
+
+      <div class="rec">
+        <div class="rec-header">
+          <div class="rec-num">Recommendation 03</div>
+          <div class="rec-title">Align public commitments with peer benchmarks to drive accountability and stakeholder credibility</div>
+        </div>
+        <div class="rec-body">
+          <p>Hilton has publicly committed to a 50% landfill waste reduction by 2030. The Atlanta Falcons and SF Giants both publish annual diversion rates. The client has not disclosed sustainability targets publicly. <strong>Establishing attainable, time-bound waste diversion milestones</strong> creates internal accountability and gives sponsors, certification bodies, and fans a concrete performance record to evaluate. The data infrastructure built through Recommendations 01 and 02 makes those commitments credible and auditable.</p>
+          <div class="rec-action">Commit to a 2025 target of 40% waste diversion, a 2027 target of 70%, and a 2030 target of 90%. Publish progress annually through a formal sustainability report, with GOAL as the system of record.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <div class="footer-inner">
+    <div>
+      <div class="footer-title">About OTCR Consulting</div>
+      <p class="footer-body">OTCR is a student-run consulting organization at the University of Illinois at Urbana-Champaign. Teams are built across disciplines, with members drawn from engineering, computer science, business, and information systems. The work is real: client engagements, not simulations.</p>
+    </div>
+    <div class="footer-logo">
+      <img src="otcr_logo.png" alt="OTCR Consulting">
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
